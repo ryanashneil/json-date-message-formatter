@@ -22,7 +22,12 @@
 <body>
     <script>
 
-        new ClipboardJS('.btn');
+        var clipboard = new ClipboardJS('.btn');
+        var result = "";
+
+        clipboard.on('success', function (e) {
+            alert(`COPIED SUCCESSFULLY: ${result}`);
+        });
 
         function onChange() {
             var dateFormat = "DD/MM/YYYY HH:mm:ss";
@@ -31,7 +36,8 @@
             var from = document.getElementById("from").value;
             var toFormatted = moment(to).format(dateFormat);
             var fromFormatted = moment(from).format(dateFormat);
-            document.getElementById("result-input").value = `'{ "inform": "${fromFormatted}", "start": "${toFormatted}", "end": "${toFormatted}", "message": "${message}"}'`;
+            result = `'{ "inform": "${fromFormatted}", "start": "${toFormatted}", "end": "${toFormatted}", "message": "${message}"}'`;
+            document.getElementById("result-input").value = result;
         }
 
     </script>
