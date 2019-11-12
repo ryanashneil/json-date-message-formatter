@@ -17,6 +17,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="utf-8">
+
+    <style>
+        .maintenance-banner {
+            background: #2d4d63;
+            padding: 24px 40px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .maintenance-banner small {
+            flex: 1;
+            margin-right: 24px;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,6 +46,12 @@
         clipboard.on('success', function (e) {
             alert(`COPIED SUCCESSFULLY: ${result}`);
         });
+
+        function updateBannerAndChange() {
+            var message = document.getElementById("message").value;
+            document.cookie = `message=${message}`;
+            onChange();
+        }
 
         function onChange() {
             var dateFormat = "DD/MM/YYYY HH:mm:ss";
@@ -42,11 +66,9 @@
 
     </script>
 
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <span class="navbar-brand mb-0 h1">Maintenance Banner Formatter</span>
-        </div>
-    </nav>
+    <div class="maintenance-banner">
+        <small id="content">Preview the banner by making changes in the <b>message</b> input box</small>
+    </div>
 
     <br>
     <br>
@@ -55,7 +77,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="form-group input-group-lg">
-                    <label for="from">Start date</label>
+                    <label for="from">Start date/time</label>
                     <input onchange="onChange()" required="true" type="datetime-local" class="form-control" id="from">
                 </div>
             </div>
@@ -64,7 +86,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="form-group input-group-lg">
-                    <label for="to">End date</label>
+                    <label for="to">End date/time</label>
                     <input onchange="onChange()" required="true" type="datetime-local" class="form-control" id="to">
                 </div>
             </div>
@@ -76,7 +98,7 @@
             <div class="col-sm-12 col-md-12 col-lg-8">
                 <div class="form-group input-group-lg">
                     <label for="message">Message</label>
-                    <textarea onchange="onChange()" style="min-height: 200px;" required="true" id="message"
+                    <textarea onchange="updateBannerAndChange()" style="min-height: 200px;" required="true" id="message"
                         name="message" class="form-control" id="message" aria-describedby="messageHelp"
                         placeholder="Enter message for banner"></textarea>
                     <small id="messageHelp" class="form-text text-muted">You can use html tags</small>
