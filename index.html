@@ -48,8 +48,7 @@
         });
 
         function updateBannerAndChange() {
-            var message = document.getElementById("message").value;
-            document.cookie = `message=${message}`;
+            content.innerHTML = document.getElementById("message").value;
             onChange();
         }
 
