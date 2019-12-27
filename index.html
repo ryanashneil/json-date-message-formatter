@@ -1,127 +1,177 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" type="text/javascript"></script>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+      type="text/javascript"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta charset="utf-8" />
 
     <style>
-        .maintenance-banner {
-            background: #2d4d63;
-            padding: 24px 40px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-start;
-            width: 100%;
-        }
+      .maintenance-banner {
+        background: #2d4d63;
+        padding: 24px 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+      }
 
-        .maintenance-banner small {
-            flex: 1;
-            margin-right: 24px;
-            color: white;
-        }
+      .maintenance-banner small {
+        flex: 1;
+        margin-right: 24px;
+        color: white;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
+      var clipboard = new ClipboardJS(".btn");
+      var result = "";
 
-        var clipboard = new ClipboardJS('.btn');
-        var result = "";
+      clipboard.on("success", function(e) {
+        alert(`COPIED SUCCESSFULLY: ${result}`);
+      });
 
-        clipboard.on('success', function (e) {
-            alert(`COPIED SUCCESSFULLY: ${result}`);
-        });
+      function updateBannerAndChange() {
+        content.innerHTML = document.getElementById("message").value;
+        onChange();
+      }
 
-        function updateBannerAndChange() {
-            content.innerHTML = document.getElementById("message").value;
-            onChange();
-        }
-
-        function onChange() {
-            var dateFormat = "DD/MM/YYYY HH:mm:ss";
-            var message = document.getElementById("message").value;
-            var to = document.getElementById("to").value;
-            var from = document.getElementById("from").value;
-            var toFormatted = moment(to).format(dateFormat);
-            var fromFormatted = moment(from).format(dateFormat);
-            result = `'{ "inform": "${fromFormatted}", "start": "${toFormatted}", "end": "${toFormatted}", "message": "${message}"}'`;
-            document.getElementById("result-input").value = result;
-        }
-
+      function onChange() {
+        var dateFormat = "DD/MM/YYYY HH:mm:ss";
+        var message = document.getElementById("message").value;
+        var to = document.getElementById("to").value;
+        var from = document.getElementById("from").value;
+        var toFormatted = moment(to).format(dateFormat);
+        var fromFormatted = moment(from).format(dateFormat);
+        result = `'{ "inform": "${fromFormatted}", "start": "${toFormatted}", "end": "${toFormatted}", "message": "${message}"}'`;
+        document.getElementById("result-input").value = result;
+      }
     </script>
 
     <div class="maintenance-banner">
-        <small id="content">Preview the banner by making changes in the <b>message</b> input box</small>
+      <small id="content"
+        >Preview the banner by making changes in the <b>message</b> input
+        box</small
+      >
     </div>
 
-    <br>
-    <br>
+    <br />
+    <br />
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="form-group input-group-lg">
-                    <label for="from">Start date/time</label>
-                    <input onchange="onChange()" required="true" type="datetime-local" class="form-control" id="from">
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-group input-group-lg">
+            <label for="from">Start date/time to show banner</label>
+            <input
+              onchange="onChange()"
+              required="true"
+              type="datetime-local"
+              class="form-control"
+              id="from"
+            />
+          </div>
         </div>
+      </div>
 
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="form-group input-group-lg">
-                    <label for="to">End date/time</label>
-                    <input onchange="onChange()" required="true" type="datetime-local" class="form-control" id="to">
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-group input-group-lg">
+            <label for="to">End date/time to hide banner</label>
+            <input
+              onchange="onChange()"
+              required="true"
+              type="datetime-local"
+              class="form-control"
+              id="to"
+            />
+            <small id="toHelp" class="form-text text-muted"
+              >As long as the end date/time has not been passed, maintenance
+              banner can still be shown even when site is under maintenance!
+            </small>
+          </div>
         </div>
+      </div>
 
-        <br>
+      <br />
 
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-8">
-                <div class="form-group input-group-lg">
-                    <label for="message">Message</label>
-                    <textarea onchange="updateBannerAndChange()" style="min-height: 200px;" required="true" id="message"
-                        name="message" class="form-control" id="message" aria-describedby="messageHelp"
-                        placeholder="Enter message for banner"></textarea>
-                    <small id="messageHelp" class="form-text text-muted">You can use html tags</small>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8">
+          <div class="form-group input-group-lg">
+            <label for="message">Message</label>
+            <textarea
+              onchange="updateBannerAndChange()"
+              style="min-height: 200px;"
+              required="true"
+              id="message"
+              name="message"
+              class="form-control"
+              id="message"
+              aria-describedby="messageHelp"
+              placeholder="Enter message for banner"
+            ></textarea>
+            <small id="messageHelp" class="form-text text-muted"
+              >You can use html tags</small
+            >
+          </div>
         </div>
+      </div>
 
-        <br>
+      <br />
 
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-8">
-                <div class="input-group mb-3 input-group-lg">
-                    <input id="result-input" readonly="true" type="text" class="form-control"
-                        placeholder="Result to be copied">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" id="button-addon2"
-                            data-clipboard-target="#result-input">Copy</button>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8">
+          <div class="input-group mb-3 input-group-lg">
+            <input
+              id="result-input"
+              readonly="true"
+              type="text"
+              class="form-control"
+              placeholder="Result to be copied"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="button-addon2"
+                data-clipboard-target="#result-input"
+              >
+                Copy
+              </button>
             </div>
+          </div>
         </div>
-
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>
