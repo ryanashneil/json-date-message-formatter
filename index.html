@@ -57,32 +57,44 @@
       var clipboard = new ClipboardJS(".btn");
       var result = "";
 
-      clipboard.on("success", function(e) {
+      clipboard.on("success", function (e) {
         alert(`COPIED SUCCESSFULLY: ${result}`);
       });
 
       function updateBannerAndChange() {
-        content.innerHTML = document.getElementById("message").value;
+        const previewArr = [
+          document.getElementById("message-en").value,
+          document.getElementById("message-zh").value,
+          document.getElementById("message-ml").value,
+          document.getElementById("message-ta").value,
+        ];
+        content.innerHTML = previewArr.filter(Boolean).join("\n\n");
         onChange();
       }
 
       function onChange() {
         var dateFormat = "DD/MM/YYYY HH:mm:ss";
-        var message = document.getElementById("message").value;
+        var messageEN = document.getElementById("message-en").value;
+        var messageZH = document.getElementById("message-zh").value;
+        var messageML = document.getElementById("message-ml").value;
+        var messageTA = document.getElementById("message-ta").value;
+        var message = `{ "en": "${messageEN}", "zh": "${messageZH}", "ml": "${messageML}", "ta": "${messageTA}" }`;
         var to = document.getElementById("to").value;
         var from = document.getElementById("from").value;
         var toFormatted = moment(to).format(dateFormat);
         var fromFormatted = moment(from).format(dateFormat);
-        result = `'{ "inform": "${fromFormatted}", "start": "${toFormatted}", "end": "${toFormatted}", "message": "${message}"}'`;
+        result = `'{ "inform": "${fromFormatted}", "start": "${toFormatted}", "end": "${toFormatted}", "message": ${message} }'`;
         document.getElementById("result-input").value = result;
       }
     </script>
 
-    <div class="maintenance-banner">
-      <small id="content"
-        >Preview the banner by making changes in the <b>message</b> input
-        box</small
-      >
+    <div
+      class="maintenance-banner"
+      style="top: 0; position: sticky; z-index: 300"
+    >
+      <small id="content" style="white-space: pre-line"
+        >Preview the banner by making changes in the <b>message</b> input box
+      </small>
     </div>
 
     <br />
@@ -128,20 +140,82 @@
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-8">
           <div class="form-group input-group-lg">
-            <label for="message">Message</label>
+            <label for="message-en">Message (en)</label>
             <textarea
               onchange="updateBannerAndChange()"
-              style="min-height: 200px;"
+              style="height: 150px"
               required="true"
-              id="message"
-              name="message"
+              id="message-en"
+              name="message-en"
               class="form-control"
-              id="message"
               aria-describedby="messageHelp"
               placeholder="Enter message for banner"
             ></textarea>
             <small id="messageHelp" class="form-text text-muted"
-              >You can use html tags</small
+              >You can use HTML tags</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8">
+          <div class="form-group input-group-lg">
+            <label for="message-zh">信息 (zh)</label>
+            <textarea
+              onchange="updateBannerAndChange()"
+              style="height: 150px"
+              required="true"
+              id="message-zh"
+              name="message-zh"
+              class="form-control"
+              aria-describedby="messageHelp"
+              placeholder="Shūrù héngfú xiāoxī"
+            ></textarea>
+            <small id="messageHelp" class="form-text text-muted">
+              您可以使用HTML标记</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8">
+          <div class="form-group input-group-lg">
+            <label for="message-en">Mesej (ml)</label>
+            <textarea
+              onchange="updateBannerAndChange()"
+              style="height: 150px"
+              required="true"
+              id="message-ml"
+              name="message-ml"
+              class="form-control"
+              aria-describedby="messageHelp"
+              placeholder="Masukkan mesej untuk banne"
+            ></textarea>
+            <small id="messageHelp" class="form-text text-muted">
+              Anda boleh menggunakan tag HTML</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8">
+          <div class="form-group input-group-lg">
+            <label for="message-en">செய்தி (ta)</label>
+            <textarea
+              onchange="updateBannerAndChange()"
+              style="height: 150px"
+              required="true"
+              id="message-ta"
+              name="message-ta"
+              class="form-control"
+              aria-describedby="messageHelp"
+              placeholder=" பேனருக்கான செய்தியை உள்ளிடவும்"
+            ></textarea>
+            <small id="messageHelp" class="form-text text-muted">
+              நீங்கள் HTML குறிச்சொற்களைப் பயன்படுத்தலாம்</small
             >
           </div>
         </div>
@@ -149,7 +223,7 @@
 
       <br />
 
-      <div class="row">
+      <div class="row" style="margin-bottom: 500px">
         <div class="col-sm-12 col-md-12 col-lg-8">
           <div class="input-group mb-3 input-group-lg">
             <input
